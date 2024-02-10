@@ -26,10 +26,4 @@ class SingleActivity : AppCompatActivity() {
     }
 
 
-    private fun goToFragment(fragment: Fragment) {
-        fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, fragment).commit()
-    }
-
-
 }
