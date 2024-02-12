@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Assignment1</string>
-    <string name="assignment_1">Assignment 1</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="assignment1">Assignment1</string>
+    <string name="product_image">Product Image</string>
+    <string name="textview">TextView</string>
+    <string name="text">TextView</string>
+    <string name="fe">TextView</string>
+    <string name="product_price_format">$ %d</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hello_world">Hello world</string>
 </resources>
