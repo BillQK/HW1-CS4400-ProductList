@@ -36,27 +36,18 @@ class ProductListFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-
     private fun setUpProductModel(dataset: List<List<Any?>>): List<Product> {
         return dataset.map { item ->
             val name = item[0] as String
+            val price = item[3] as Int
             val typeStr = item[1] as String
-            val expiryDate = item[2] as? String // It's nullable
-            val price =
-                (item[3] as Int)
+            val expiryDate = item[2] as? String // It's nullable and only for food products
 
-            val type = when (typeStr) {
-                "Equipment" -> ProductType.Equipment
-                "Food" -> ProductType.Food
+            when (typeStr) {
+                "Equipment" -> Product.Equipment(name, price)
+                "Food" -> Product.Food(name, price, expiryDate)
                 else -> throw IllegalArgumentException("Unknown product type: $typeStr")
             }
-            val image = when (type) {
-                ProductType.Equipment -> R.drawable.equipment
-                ProductType.Food -> R.drawable.food
-            }
-
-
-            Product(name, expiryDate, price, type, image)
         }
 
     }

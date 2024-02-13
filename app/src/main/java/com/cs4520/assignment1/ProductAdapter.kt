@@ -26,7 +26,7 @@ class ProductAdapter(private val productList: List<Product>) :
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_recycler_view_row, parent, false)
+            .inflate(R.layout.item_product_view, parent, false)
         return ProductViewHolder(view)
     }
 
@@ -47,55 +47,35 @@ class ProductAdapter(private val productList: List<Product>) :
     allowing for item reuse and reducing the need for inflating new views.
      */
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        /*
-        Binds data from a Product object to the views within the ViewHolder's layout.
-        It sets the product name, price, expiry date (if available), background color,
-        and image based on the product's attributes.
-         */
-        fun bind(product: Product) {
-            val productName = itemView.findViewById<TextView>(R.id.productName)
-            val productPrice = itemView.findViewById<TextView>(R.id.productPrice)
-            val productExpiryDate = itemView.findViewById<TextView>(R.id.productExpiryDate)
-            val productCardBackGroundColor = itemView.findViewById<CardView>(R.id.productCardView)
-            val constraintLayout: ConstraintLayout =
-                itemView.findViewById(R.id.constraintLayout) // Reference to inner ConstraintLayout
 
-            productName?.text = product.name // Use ?. to safely call setText on a nullable receiver
-            productPrice?.text =
+        private val productName: TextView = itemView.findViewById(R.id.productName)
+        private val productPrice: TextView = itemView.findViewById(R.id.productPrice)
+        private val productExpiryDate: TextView? = itemView.findViewById(R.id.productExpiryDate)
+        private val productCardBackGroundColor: CardView =
+            itemView.findViewById(R.id.productCardView)
+        private val productImage: ImageView = itemView.findViewById(R.id.productImage)
+        private val constraintLayout: ConstraintLayout =
+            itemView.findViewById(R.id.constraintLayout)
+
+        fun bind(product: Product) {
+            productName.text = product.name
+            productPrice.text =
                 itemView.context.getString(R.string.product_price_format, product.price)
 
-            if (product.expiryDate == null) {
-                productExpiryDate.visibility = View.GONE
-
-                ConstraintSet().apply {
-                    clone(constraintLayout)
-                    connect(
-                        R.id.productPrice,
-                        ConstraintSet.TOP,
-                        R.id.productName,
-                        ConstraintSet.BOTTOM,
-                        8
-                    )
-                    applyTo(constraintLayout)
+            // Handling for optional expiry date in Food products
+            if (product is Product.Food && product.expiryDate != null) {
+                productExpiryDate?.apply {
+                    visibility = View.VISIBLE
+                    text = product.expiryDate
                 }
             } else {
-                productExpiryDate.visibility = View.VISIBLE
-                productExpiryDate.text = product.expiryDate
-
-                // Reset constraints
+                productExpiryDate?.visibility = View.GONE
                 ConstraintSet().apply {
                     clone(constraintLayout)
                     connect(
-                        R.id.productExpiryDate,
-                        ConstraintSet.TOP,
-                        R.id.productName,
-                        ConstraintSet.BOTTOM,
-                        8
-                    )
-                    connect(
                         R.id.productPrice,
                         ConstraintSet.TOP,
-                        R.id.productExpiryDate,
+                        R.id.productName,
                         ConstraintSet.BOTTOM,
                         8
                     )
@@ -103,15 +83,11 @@ class ProductAdapter(private val productList: List<Product>) :
                 }
             }
 
-            // Set the background color based on the product type
-            productCardBackGroundColor.setCardBackgroundColor(
-                Color.parseColor(product.type.backgroundColor)
-            )
-
-            // Set the image resource based on the product type
-            val imageView = itemView.findViewById<ImageView>(R.id.productImage)
-            imageView.setImageResource(product.type.imageResource)
+            // Set background color and image
+            productCardBackGroundColor.setCardBackgroundColor(Color.parseColor(product.backgroundColor))
+            productImage.setImageResource(product.imageResource)
         }
     }
+
 
 }

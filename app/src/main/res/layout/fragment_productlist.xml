@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/product_recycler_view_row" />
+        tools:listitem="@layout/item_product_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
