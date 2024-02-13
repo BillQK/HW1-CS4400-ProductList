@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -54,8 +52,6 @@ class ProductAdapter(private val productList: List<Product>) :
         private val productCardBackGroundColor: CardView =
             itemView.findViewById(R.id.productCardView)
         private val productImage: ImageView = itemView.findViewById(R.id.productImage)
-        private val constraintLayout: ConstraintLayout =
-            itemView.findViewById(R.id.constraintLayout)
 
         fun bind(product: Product) {
             productName.text = product.name
@@ -63,23 +59,18 @@ class ProductAdapter(private val productList: List<Product>) :
                 itemView.context.getString(R.string.product_price_format, product.price)
 
             // Handling for optional expiry date in Food products
-            if (product is Product.Food && product.expiryDate != null) {
-                productExpiryDate?.apply {
-                    visibility = View.VISIBLE
-                    text = product.expiryDate
+            when (product) {
+                is Product.Equipment -> {
+                    productExpiryDate?.apply {
+                        visibility = View.GONE
+                    }
                 }
-            } else {
-                productExpiryDate?.visibility = View.GONE
-                ConstraintSet().apply {
-                    clone(constraintLayout)
-                    connect(
-                        R.id.productPrice,
-                        ConstraintSet.TOP,
-                        R.id.productName,
-                        ConstraintSet.BOTTOM,
-                        8
-                    )
-                    applyTo(constraintLayout)
+
+                is Product.Food -> {
+                    productExpiryDate?.apply {
+                        visibility = View.VISIBLE
+                        text = product.expiryDate
+                    }
                 }
             }
 

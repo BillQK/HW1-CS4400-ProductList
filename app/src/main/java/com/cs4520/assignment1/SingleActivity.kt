@@ -10,7 +10,7 @@ class SingleActivity : AppCompatActivity() {
 
     /*
     The onCreate method is a lifecycle callback that runs when the
-    activity is being created. It is where you perform initial setup.
+    activity is being created.
     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -44,7 +44,7 @@ class ProductListFragment : Fragment() {
             val expiryDate = item[2] as? String // It's nullable and only for food products
 
             when (typeStr) {
-                "Equipment" -> Product.Equipment(name, price)
+                "Equipment" -> Product.Equipment(name, price, expiryDate)
                 "Food" -> Product.Food(name, price, expiryDate)
                 else -> throw IllegalArgumentException("Unknown product type: $typeStr")
             }
