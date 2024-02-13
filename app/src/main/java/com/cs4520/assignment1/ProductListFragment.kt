@@ -1,7 +1,9 @@
 package com.cs4520.assignment1
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 This class extends Fragment, making it a component that can be added to an activity to encapsulate
  its own UI and behavior.
  */
-class ProductListFragment : Fragment(R.layout.fragment_productlist) {
+class ProductListFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_productlist, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Find recycler view by id
@@ -24,6 +35,7 @@ class ProductListFragment : Fragment(R.layout.fragment_productlist) {
         // Set the adapter to the RecyclerView
         recyclerView.adapter = adapter
     }
+
 
     private fun setUpProductModel(dataset: List<List<Any?>>): List<Product> {
         return dataset.map { item ->
