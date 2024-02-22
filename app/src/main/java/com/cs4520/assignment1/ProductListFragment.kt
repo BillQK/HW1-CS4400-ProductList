@@ -7,19 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cs4520.assignment1.databinding.FragmentProductlistBinding
 
 /*
 This class extends Fragment, making it a component that can be added to an activity to encapsulate
  its own UI and behavior.
  */
 class ProductListFragment : Fragment() {
-
+    private lateinit var binding: FragmentProductlistBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_productlist, container, false)
+    ): View {
+        binding = FragmentProductlistBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
